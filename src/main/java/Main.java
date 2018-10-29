@@ -30,10 +30,18 @@ public class Main {
 
             }else if (sFunc.equals("3") && sExp.equals("1")) {
                 //expiries into file
-
+                //arraylist me ola ta vehicles.sort(,new vehicle comparator);
 
             }else if (sFunc.equals("3") && sExp.equals("2")) {
                 //expiries into console
+
+
+            }else if (sFunc.equals("4") && sExp.equals("1")) {
+                //calc fine into file
+
+
+            }else if (sFunc.equals("4") && sExp.equals("2")) {
+                //calc fine into console
 
 
             }
@@ -52,9 +60,10 @@ public class Main {
         System.out.println("------------------------------------");
         System.out.println("--- Select Functionality to perform:");
         System.out.println("------------------------------------");
-        System.out.println("1 - Vehicle Insurance status");
-        System.out.println("2 - Forecoming Expires");
-        System.out.println("3 - Expiries by plate");
+        System.out.println("1 - Vehicle Insurance status");                 //F1
+        System.out.println("2 - Forecoming Expires (given a time-frame)");  //F2
+        System.out.println("3 - Vehicles ordered by plate");                        //F3
+        System.out.println("4 - Calculate fine cost per Owner");            //F4
         System.out.println("------------------------------------");
         System.out.println("0 - Exit");
         System.out.println("------------------------------------");
@@ -78,14 +87,14 @@ public class Main {
         do {
             selection = input.nextLine();
             if (selection.length() == 1) {
-                if (selection.equals("1") || selection.equals("2") || selection.equals("3")) {
+                if (selection.equals("1") || selection.equals("2") || selection.equals("3") || selection.equals("4")) {
                     //System.out.println("selected " + selection);
                     return selection;
                 } else if (selection.equals("0")) {
                     System.exit(0);
                 }
             }
-            System.out.print("Make a selection (Options: 0, 1, 2 or 3): ");
+            System.out.print("Make a selection (Options: 0, 1, 2, 3 or 4): ");
         } while (true);
     }
 
