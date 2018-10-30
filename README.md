@@ -25,7 +25,7 @@ H κλάση VehicleComparator θα χρησιμοποιηθεί στην ταξ
 
 
 # DataBase ER
-![Alt text](Readme IMG/use.case.diagram.png?raw=true "Optional Title")
+![ER](https://raw.githubusercontent.com/PanosMagic32/project1_regen/master/Readme%20IMG/er.png)
 
 ### DataBase Schema
 
@@ -83,4 +83,4 @@ create table insurance(
 •	As a user I want to be able to export the data into a file or to view them on the console.
 
 # Use case diagram
-![Alt text](/Readme IMG/er.png?raw=true "Optional Title")
+![ER](https://raw.githubusercontent.com/PanosMagic32/project1_regen/master/Readme%20IMG/use.case.diagram.png)
