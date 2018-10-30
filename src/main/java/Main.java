@@ -41,7 +41,7 @@ public class Main {
             } else if (selectedFunctionality.equals("2")) {
                 //forecoming time frame
                 int timeFrame=readTimeFrame();
-                db.forcomingExpiries(timeFrame);
+               // db.forcomingExpiries(timeFrame);
             } else if (selectedFunctionality.equals("3")) {
                 //expiries
                 //arraylist me ola ta vehicles.sort(,new vehicle comparator);
