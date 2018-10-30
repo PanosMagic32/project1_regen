@@ -1,9 +1,0 @@
------------------------------
------ Vehicle's Status ------
------------------------------
-Vehicle's plate: UKB-8218
-Engine Capacity: 2030cc
-Manufactured Year: 2012
-CO₂ Emissions: Euro 4
-Expire Date1979-01-26
------------------------------
