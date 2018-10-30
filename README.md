@@ -25,7 +25,7 @@ H κλάση VehicleComparator θα χρησιμοποιηθεί στην ταξ
 
 
 # DataBase ER
-![Alt text](/Readme IMG/use.case.diagram.png?raw=true "Optional Title")
+![Alt text](Readme IMG/use.case.diagram.png?raw=true "Optional Title")
 
 ### DataBase Schema
 
