@@ -44,9 +44,9 @@ public class DButils {
                 String exp_date = rs.getString("exp_date");
                 usersPlate=usersPlate.toUpperCase();
 
-                System.out.format("\n\n\n\n\n\n\n---------------------------\n--- Vehicle's Status\n---------------------------\n");
-                System.out.format("Vehicle's plate: %s\nEngine Capacity: %scc\nManufactured Year: %s\nCO₂ Emissions: %s\nExpire Date: %s\n",usersPlate, cc, manufactured_year, co2emissions, exp_date);
-                System.out.println("---------------------------");
+                Main.printData("-----------------------------\n----- Vehicle's Status ------\n-----------------------------\n");
+                Main.printData("Vehicle's plate: "+usersPlate+"\nEngine Capacity: "+cc+"cc\nManufactured Year: "+manufactured_year+"\nCO₂ Emissions: "+co2emissions+"\nExpire Date"+exp_date);
+                Main.printData("\n-----------------------------");
             }else{
                 System.out.println("Plate not found, please try again!");
             }
@@ -54,8 +54,37 @@ public class DButils {
 
     }
 
+/*
+    public void forcomingExpiries(int timeFrame) {
+
+       String query = "SELECT i.exp_date,i.init_date,v.plate,v.cc,v.manufactured_year \n" +
+                "FROM insurance i join vehicle v \n" +
+                "ON v.vehicle_id=i.vehicle_id \n" +
+                "WHERE i.exp_date<(select DATE_ADD(DATE_FORMAT(NOW(),'%Y%m%d'), INTERVAL 80 DAY)) \n" +
+                "and i.exp_date>(select DATE_FORMAT(NOW(),'%Y%m%d'));\n";
+
+        ResultSet rs = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, usersPlate);
+            rs = preparedStatement.executeQuery();
+
+            if (rs.last()) {
+                int cc = rs.getInt("cc");
+                String manufactured_year = rs.getString("manufactured_year");
+                String co2emissions = rs.getString("co2emissions");
+                String exp_date = rs.getString("exp_date");
+                usersPlate=usersPlate.toUpperCase();
+
+                System.out.format("\n\n\n\n\n\n\n---------------------------\n--- Vehicle's Status\n---------------------------\n");
+                System.out.format("Vehicle's plate: %s\nEngine Capacity: %scc\nManufactured Year: %s\nCO₂ Emissions: %s\nExpire Date: %s\n",usersPlate, cc, manufactured_year, co2emissions, exp_date);
+                System.out.println("---------------------------");
+            }else{
+                System.out.println("Plate not found, please try again!");
+            }
+
+    }*/
+
 
     public DButils() {
     }
-
 }

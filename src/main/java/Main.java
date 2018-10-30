@@ -24,23 +24,24 @@ public class Main {
 
             if (selectedExportType.equals("1")) {
                 //output=file
-                output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv")));
+                output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.txt")));
             } else {
                 //output=console
                 output = new BufferedWriter(new OutputStreamWriter(System.out));
             }
 
 
+
+
+
             if (selectedFunctionality.equals("1")) {
                 //status
                 String usersPlate = readPlate();
                 db.searchByPlate(usersPlate);
-
-                //syndesi stin vasi kai eepistrofi tou insurance status kai ektypwsi
-
             } else if (selectedFunctionality.equals("2")) {
                 //forecoming time frame
-
+                int timeFrame=readTimeFrame();
+                db.forcomingExpiries(timeFrame);
             } else if (selectedFunctionality.equals("3")) {
                 //expiries
                 //arraylist me ola ta vehicles.sort(,new vehicle comparator);
@@ -63,6 +64,22 @@ public class Main {
         }
     }
 
+    private static int readTimeFrame() {
+        Scanner input = new Scanner(System.in);
+        int timeFrame;
+        String tf="";
+
+        System.out.print("Give a time frame (days): ");
+        do {
+            tf = input.nextLine();
+            if (tf.matches("[0-9]*")) {
+                timeFrame=Integer.parseInt(tf);
+                return timeFrame;
+            }
+            System.out.print("Give a time frame (ex: 30): ");
+        } while (true);
+    }
+
     private static String readPlate() {
         Scanner input = new Scanner(System.in);
         String usersPlate = "";
@@ -80,7 +97,7 @@ public class Main {
 
     }
 
-    private static void printData(String stringToPrint) throws IOException {
+    public static void printData(String stringToPrint) throws IOException {
         output.write(stringToPrint);
         output.flush();
     }
