@@ -34,6 +34,7 @@ public class Main {
             if (selectedFunctionality.equals("1")) {
                 //status
                 String usersPlate = readPlate();
+                db.searchByPlate(usersPlate);
 
                 //syndesi stin vasi kai eepistrofi tou insurance status kai ektypwsi
 
@@ -70,6 +71,7 @@ public class Main {
         do {
             usersPlate = input.nextLine();
             if (usersPlate.matches(PLATE_REGEX)) {
+                usersPlate=usersPlate.toLowerCase();
                 return usersPlate;
             }
             System.out.print("Give a plate number (ex: NHO-2233): ");
