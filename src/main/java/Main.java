@@ -39,6 +39,12 @@ public class Main {
             }
 
             ArrayList<Vehicle> vList = db.getDBVehicles();
+            ArrayList<Owner> oList = db.getDBOwners();
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar c = Calendar.getInstance();
+            String now = dateFormat.format(c.getTime());
+
             switch (selectedFunctionality) {
                 case "1":
                     //status
@@ -53,12 +59,10 @@ public class Main {
                     }
                     if (!found) System.out.println("Plate not found.");
                     break;
+
                 case "2"://forecoming time frame
                     int timeFrame = readTimeFrame();
 
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    Calendar c = Calendar.getInstance();
-                    String now = dateFormat.format(c.getTime());
                     c.setTime(dateFormat.parse(now));
                     c.add(Calendar.DAY_OF_MONTH, timeFrame);
                     String nowPlusTimeFrame = dateFormat.format(c.getTime());
@@ -70,6 +74,7 @@ public class Main {
                         }
                     }
                     break;
+
                 case "3":
                     //expiries
                     vList.sort(new VehicleComparator());
@@ -78,9 +83,34 @@ public class Main {
                         printData(v.toString());
                     }
                     break;
-                case "4":
-                    //calc fine
 
+                case "4":
+                    //calculate fine
+                    Scanner input = new Scanner(System.in);
+                    String usersFine = "";
+                    int fine = 0;
+                    System.out.print("Give a cost for the fine: ");
+
+                    do {
+                        usersFine = input.nextLine();
+                        if (usersFine.matches("[0-9]*")) {
+                            fine = Integer.parseInt(usersFine);
+                            break;
+                        }
+                        System.out.print("Give a proper number (ex: 10).");
+                    } while (true);
+
+
+                    for (Owner o : oList) {
+                        int counter = 0;
+                        for (Vehicle v : vList) {
+                            String exp = v.getIns_exp_date();
+                            if (o.getOid() == v.getOwner_id() && exp.compareTo(now) < 0) counter++;
+                        }
+                        if (counter > 0) {
+                            printData(o.getFname() + " " + o.getLname() + "'s fine for " + counter + " car(s) is " + (fine * counter) + " euros.\n");
+                        }
+                    }
                     break;
             }
 
