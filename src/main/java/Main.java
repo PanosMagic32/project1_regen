@@ -31,7 +31,7 @@ public class Main {
 
             if (selectedExportType.equals("1")) {
                 //output=file
-                myOutput = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.txt")));
+                myOutput = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv")));
             } else {
                 //output=console
                 myOutput = new BufferedWriter(new OutputStreamWriter(System.out));

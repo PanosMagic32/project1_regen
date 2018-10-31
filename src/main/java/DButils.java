@@ -9,7 +9,7 @@ public class DButils {
     public static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/regen_ins?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
 
-    private static final String DB_PASSWORD = "5288";
+    private static final String DB_PASSWORD = "root";
     private static Connection connection;
 
 
@@ -24,8 +24,7 @@ public class DButils {
     }
 
 
-
-    public  ArrayList<Vehicle> getDBVehicles() throws Exception {
+    public ArrayList<Vehicle> getDBVehicles() throws Exception {
 
         String query = "SELECT * FROM vehicle";
         ArrayList<Vehicle> vList = new ArrayList<>();
@@ -42,12 +41,38 @@ public class DButils {
                 int oid = rs.getInt("oid");
                 Vehicle vehicle = new Vehicle(plate, ins_exp_date, vid, oid);
                 vList.add(vehicle);
-            }return vList;
+            }
+            return vList;
         }
 
     }
 
-/*
+    public ArrayList<Owner> getDBOwners() throws SQLException {
+        String query = "SELECT * FROM owner";
+        ArrayList<Owner> oList = new ArrayList<>();
+
+        ResultSet rs = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            rs = preparedStatement.executeQuery(query);
+
+            while ( rs.next()) {
+                int oid = rs.getInt("oid");
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                Owner owner = new Owner(fname,lname,oid);
+                oList.add(owner);
+            }
+            return oList;
+
+        }
+
+
+
+
+}
+
+
+    /*
     public void forcomingExpiries(int timeFrame) {
 
        String query = "SELECT i.exp_date,i.init_date,v.plate,v.cc,v.manufactured_year \n" +
