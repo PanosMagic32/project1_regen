@@ -1,6 +1,7 @@
 .idea/
 out/
-project1_team4_insurance.iml
 target/
 output.csv
 output.txt
+*.iml
+config.properties

@@ -1,23 +1,24 @@
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
     private static BufferedWriter myOutput;
-    private static DButils db;
     private static final String PLATE_REGEX = "[a-zA-Z]{3}-[0-9]{4}";
+
 
     public static void main(String[] args) throws Exception {
 
         String selectedFunctionality, selectedExportType;
 
-        db = new DButils();
+        DButils db = new DButils();
         db.connect();
 
         while (true) {
@@ -31,7 +32,7 @@ public class Main {
 
             if (selectedExportType.equals("1")) {
                 //output=file
-                myOutput = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv")));
+                myOutput = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.txt")));
             } else {
                 //output=console
                 myOutput = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -71,7 +72,6 @@ public class Main {
                     break;
                 case "3":
                     //expiries
-                    //arraylist me ola ta vehicles.sort(,new vehicle comparator);
                     vList.sort(new VehicleComparator());
                     printData("Vehicles ordered by plate\n-------------------------\n");
                     for(Vehicle v : vList){
@@ -81,23 +81,16 @@ public class Main {
                 case "4":
                     //calc fine
 
-                    printData("to kostos einai 50 euro");
                     break;
             }
-
-            //if(selectedExportType.equals("1")) System.out.println("File ready!");
-
 
             //ask to continue!!
             Scanner input = new Scanner(System.in);
             System.out.println("\n\nPress any key to continue...");
             input.nextLine();
-
-
         }
     }
 
-    // Διαβάζουμε string από τον χρήστη και το μετατρέπουμε σε int για να αποφύγουμε λανθασμένη είσοδο.
     private static int readTimeFrame() {
         Scanner input = new Scanner(System.in);
         int timeFrame;
@@ -127,20 +120,30 @@ public class Main {
             }
             System.out.print("Give a plate number (ex: NHO-2233): ");
         } while (true);
-
     }
 
+    /**
+     * The {@code printData} method prints the parameter {@code stringToPrint}
+     * to a file named "output.txt" or to users console window.
+     * <p>
+     * The destination output depends from the users choice on the {@code Main.printExportTypeMenu()} method.
+     *
+     * @param  stringToPrint     String to be written
+     *
+     * @exception  IOException  If an I/O error occurs
+     */
     public static void printData(String stringToPrint) {
         try {
             myOutput.write(stringToPrint);
             myOutput.flush();
+            //if(selectedExportType.equals("1")) System.out.println("File ready!");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    protected static void printMainMenu() {
+    private static void printMainMenu() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("------------------------------------");
         System.out.println("--- Select Functionality to perform:");
@@ -154,7 +157,7 @@ public class Main {
         System.out.println("------------------------------------");
     }
 
-    protected static void printExportTypeMenu() {
+    private static void printExportTypeMenu() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("----------------------");
         System.out.println("--- Enter export type:");
@@ -164,7 +167,7 @@ public class Main {
         System.out.println("----------------------");
     }
 
-    protected static String selectFunctionality() throws SQLException {
+    private static String selectFunctionality() throws SQLException {
         Scanner input = new Scanner(System.in);
         String selection = "";
 
@@ -176,7 +179,7 @@ public class Main {
         } while (true);
     }
 
-    protected static String selectExportType() {
+    private static String selectExportType() {
         Scanner input = new Scanner(System.in);
         String selection = "";
 
