@@ -45,6 +45,9 @@ public class DButils {
             }
             return vList;
         }
+        finally {
+            rs.close();
+        }
     }
 
     public ArrayList<Owner> getDBOwners() throws SQLException {
@@ -64,6 +67,9 @@ public class DButils {
                 oList.add(owner);
             }
             return oList;
+        }
+        finally {
+            rs.close();
         }
     }
 }
