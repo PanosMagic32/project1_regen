@@ -1,6 +1,7 @@
 # ReGen_Insurance_
 Project #1
-[![N|Solid](https://media.licdn.com/dms/image/C4D0BAQEU9pNF3SjSyw/company-logo_200_200/0?e=2159024400&v=beta&t=kHh6r4G3f9fW_BODg5295xJ6A-y8qVffcWeJDROsYi8)](https://nodesource.com/products/nsolid)
+![regeneration.gr](https://image.ibb.co/ftrsSf/logo-1.png)
+![code.hub](https://www.codehub.gr/wp-content/uploads/2018/01/cropped-CodeHub-logo_320x132.png)
 
 # Classes:
 ### Main:  
@@ -12,66 +13,50 @@ H κλάση Owner θα αντιπροσωπεύει τους ιδιοκτήτε
 ### Vehicle: 
 H κλάση Vehicle θα αντιπροσωπεύει τα οχήματα της βάσης και τις ιδιότητες αυτών. Όπως η Owner, έτσι και αυτή θα περιλαμβάνει ως πεδία τα χαρακτηριστικά του αντίστοιχου πίνακα της βάσης.
 
-### Insurance: 
-H κλάση  Insurance θα αντιπροσωπεύει τις ασφάλειες των οχημάτων. 
-
 ### DButils: 
 H κλάση DButils θα περιλαμβάνει όλες τις λειτουργίες που αφορούν την σύνδεση και μεταφορά δεδομένων από και προς την βάση.
 
 ### VehicleComparator: 
 H κλάση VehicleComparator θα χρησιμοποιηθεί στην ταξινόμηση των οχημάτων (κάνοντας implement το interface Comparator). Με την κλάση αυτή, θα «εξηγήσουμε» στο πρόγραμμά μας τον τρόπο με τον οποίο δύο αντικείμενατύπου Vehicle θα πρέπει να συγκρίνονται μεταξύ τους.
 
+### PropertiesReader: 
+H κλάση PropertiesReader θα χρησιμοποιηθεί για την ανάγνωση των στοιχείων σύνδεσης στην βάση δεδομένων της εφαρμογής, τα οποία για λόγους ασφαλείας θα βρίσκονται τοπικά, και όχι στο παρόν repository toy github.
+
 
 
 
 # DataBase ER
-![ER](https://raw.githubusercontent.com/PanosMagic32/project1_regen/master/Readme%20IMG/er.png)
+![ER](https://image.ibb.co/eijwnf/er.png)
 
 ### DataBase Schema
 
 ```sh
+create database regen_ins char set utf8mb4 collate utf8mb4_unicode_ci;
+use regen_ins;
+```
+
+
+```sh
 drop table if exists owner;
-create table owner (
-    owner_id int unsigned not null auto_increment,
-    first_name varchar(50) not null,
-    last_name varchar(50) not null,
-    tel varchar(50) not null,
-    mail varchar(50) not null,
-    address varchar (50) not null,
-    adt_number varchar(10) not null,
-    primary key(owner_id)
-) engine = InnoDB default charset = utf8mb4;
+create table owner(
+	oid int unsigned not null auto_increment,
+	fname varchar(50) not null,
+	lname varchar(50) not null,
+	primary key (oid)
+) engine=InnoDB default charset=utf8mb4;
 ```
 
 
 ```sh
 drop table if exists vehicle;
-create table vehicle (
-    vehicle_id int unsigned not null auto_increment,
-    plate varchar(8) not null,
-    cc smallint unsigned not null,
-    manufactured_year smallint unsigned not null,
-    co2emissions varchar(6) not null, #Euro 1 - Euro 6
-    owner_id int unsigned not null,
-    primary key(vehicle_id),
-    foreign key(owner_id) references owner(owner_id)
-) engine = InnoDB default charset = utf8mb4;
-```
-
-
-```sh
-drop table if exists insurance;
-create table insurance(
-    insurance_id int unsigned auto_increment,
-    exp_date date not null,
-    init_date date not null,
-    cost decimal(5, 2) not null,
-    owner_id int unsigned not null,
-    vehicle_id int unsigned not null,
-    primary key(insurance_id),
-    foreign key(owner_id) references owner(owner_id),
-    foreign key(vehicle_id) references vehicle(vehicle_id)
-) engine = InnoDB default charset = utf8mb4;
+create table vehicle(
+	vid int unsigned not null auto_increment,
+	plate varchar(8) not null,
+	ins_exp_date date not null,
+	oid int unsigned not null,
+    primary key(vid),
+	foreign key(oid) references owner(oid)
+) engine=InnoDB default charset=utf8mb4;
 ```
 
 
@@ -83,4 +68,4 @@ create table insurance(
 •	As a user I want to be able to export the data into a file or to view them on the console.
 
 # Use case diagram
-![ER](https://raw.githubusercontent.com/PanosMagic32/project1_regen/master/Readme%20IMG/use.case.diagram.png)
+![ER](https://image.ibb.co/jKJNSf/use-case-diagram.png)
