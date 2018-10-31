@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DButils {
 
@@ -8,7 +9,7 @@ public class DButils {
     public static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/regen_ins?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
 
-    private static final String DB_PASSWORD = "root";
+    private static final String DB_PASSWORD = "5288";
     private static Connection connection;
 
 
@@ -23,33 +24,25 @@ public class DButils {
     }
 
 
-    //    select exp_date from vehicle where plate=usersPlate
-    //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-    //Date date = new Date();
-    //String today = dateFormat.format(date));
 
-    public static void searchByPlate(String usersPlate) throws Exception {
+    public  ArrayList<Vehicle> getDBVehicles() throws Exception {
 
-        String query = "SELECT cc, manufactured_year, co2emissions, exp_date FROM vehicle v join insurance i ON v.vehicle_id=i.vehicle_id WHERE v.plate=?";
+        String query = "SELECT * FROM vehicle";
+        ArrayList<Vehicle> vList = new ArrayList<>();
 
         ResultSet rs = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, usersPlate);
-            rs = preparedStatement.executeQuery();
+            rs = preparedStatement.executeQuery(query);
 
-            if (rs.last()) {
-                int cc = rs.getInt("cc");
-                String manufactured_year = rs.getString("manufactured_year");
-                String co2emissions = rs.getString("co2emissions");
-                String exp_date = rs.getString("exp_date");
-                usersPlate=usersPlate.toUpperCase();
-
-                Main.printData("-----------------------------\n----- Vehicle's Status ------\n-----------------------------\n");
-                Main.printData("Vehicle's plate: "+usersPlate+"\nEngine Capacity: "+cc+"cc\nManufactured Year: "+manufactured_year+"\nCO₂ Emissions: "+co2emissions+"\nExpire Date"+exp_date);
-                Main.printData("\n-----------------------------");
-            }else{
-                System.out.println("Plate not found, please try again!");
-            }
+            //iterate through results
+            while (rs.next()) {
+                int vid = rs.getInt("vid");
+                String plate = rs.getString("plate");
+                String ins_exp_date = rs.getString("ins_exp_date");
+                int oid = rs.getInt("oid");
+                Vehicle vehicle = new Vehicle(plate, ins_exp_date, vid, oid);
+                vList.add(vehicle);
+            }return vList;
         }
 
     }
