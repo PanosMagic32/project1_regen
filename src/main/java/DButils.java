@@ -6,26 +6,28 @@ public class DButils {
 
     private static Connection connection;
 
+
+
     public DButils() {
     }
 
     void connect() throws Exception {
         Properties prop = PropertiesReader.getProps();
 
-        String DB_DRIVER = prop.getProperty("DB_DRIVER");
-        String DB_CONNECTION = prop.getProperty("DB_CONNECTION");
-        String DB_USER = prop.getProperty("DB_USER");
-        String DB_PASSWORD = prop.getProperty("DB_PASSWORD");
+        String dbDriver = prop.getProperty("DB_DRIVER");
+        String dbConnection = prop.getProperty("DB_CONNECTION");
+        String dbUser = prop.getProperty("DB_USER");
+        String dbPassword = prop.getProperty("DB_PASSWORD");
 
-        Class.forName(DB_DRIVER);
-        connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+        Class.forName(dbDriver);
+        connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
     }
 
     public void disconnect() throws SQLException {
         if (connection != null) connection.close();
     }
 
-    ArrayList<Vehicle> getDBVehicles() throws Exception {
+    ArrayList<Vehicle> getDBVehicles() {
 
         String query = "SELECT * FROM vehicle";
         ArrayList<Vehicle> vList = new ArrayList<>();
@@ -44,13 +46,19 @@ public class DButils {
                 vList.add(vehicle);
             }
             return vList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        finally {
-            rs.close();
-        }
+        return null;
     }
 
-    public ArrayList<Owner> getDBOwners() throws SQLException {
+    ArrayList<Owner> getDBOwners() {
         String query = "SELECT * FROM owner";
         ArrayList<Owner> oList = new ArrayList<>();
 
@@ -67,9 +75,25 @@ public class DButils {
                 oList.add(owner);
             }
             return oList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        finally {
-            rs.close();
+        return null;
+    }
+
+    void mergeOwnersVehicles(ArrayList<Owner> oList, ArrayList<Vehicle> vList){
+        for(Owner o : oList){
+            for(Vehicle v:vList){
+                if(o.getOid()==v.getOid()){
+                    o.addNewVehicle(v);
+                }
+            }
         }
     }
 }

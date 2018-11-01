@@ -5,13 +5,12 @@ public class Owner {
     private String fname;
     private String lname;
     private int oid;
-    private ArrayList<Vehicle> vList;
+    private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();;
 
     public Owner(String fname, String lname, int oid) {
         this.fname = fname;
         this.lname = lname;
         this.oid = oid;
-        this.vList= new ArrayList<Vehicle>();
     }
 
     public String getFname() {
@@ -26,12 +25,12 @@ public class Owner {
         return oid;
     }
 
-    public ArrayList<Vehicle> getvList() {
-        return vList;
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicles;
     }
 
-    public void addNewVList(ArrayList<Vehicle> vList) {
-        this.vList = vList;
+    public void addNewVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class Owner {
         return "Owner{" +
                 "fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
-                ", vehicles are= '"+ vList +'\'' +
+                ", vehicles are= '"+ vehicles +'\'' +
                 '}';
     }
 }

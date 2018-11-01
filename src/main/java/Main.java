@@ -2,12 +2,13 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     private static BufferedWriter myOutput;
@@ -40,6 +41,8 @@ public class Main {
 
             ArrayList<Vehicle> vList = db.getDBVehicles();
             ArrayList<Owner> oList = db.getDBOwners();
+            db.disconnect();
+            db.mergeOwnersVehicles(oList, vList);
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Calendar c = Calendar.getInstance();
@@ -49,15 +52,10 @@ public class Main {
                 case "1":
                     //status
                     String usersPlate = readPlate();
-                    boolean found = false;
-                    for (Vehicle v : vList) {
-                        if (v.getPlate().equals(usersPlate)) {
-                            printData("Vehicle with plate " + v.getPlate().toUpperCase() + ", has insurance expiration date " + v.getIns_exp_date() + ".");
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) System.out.println("Plate not found.");
+
+                    List<Vehicle> b = vList.stream().filter((v) -> v.getPlate().equals(usersPlate)).collect(Collectors.toList());
+                    if (!b.isEmpty()) printData(b.get(0).toString());
+                    else System.out.println("Plate not found.");
                     break;
 
                 case "2"://forecoming time frame
@@ -79,39 +77,40 @@ public class Main {
                     //expiries
                     vList.sort(new VehicleComparator());
                     printData("Vehicles ordered by plate\n-------------------------\n");
-                    for(Vehicle v : vList){
+                    for (Vehicle v : vList) {
                         printData(v.toString());
                     }
                     break;
 
                 case "4":
                     //calculate fine
-                    Scanner input = new Scanner(System.in);
-                    String usersFine = "";
-                    int fine = 0;
-                    System.out.print("Give a cost for the fine: ");
-
-                    do {
-                        usersFine = input.nextLine();
-                        if (usersFine.matches("[0-9]*")) {
-                            fine = Integer.parseInt(usersFine);
-                            break;
-                        }
-                        System.out.print("Give a proper number (ex: 10).");
-                    } while (true);
-
+                    int usersFine = readFine();
 
                     for (Owner o : oList) {
+                        int counter = 0;
+                        for (Vehicle v : o.getVehicles()) {
+                            String exp = v.getIns_exp_date();
+                            if (o.getOid() == v.getOid() && exp.compareTo(now) < 0) counter++;
+                        }
+                        if (counter > 0) {
+                            printData(o.getFname() + " " + o.getLname() + "'s fine for " + counter + " car(s) is " + (usersFine * counter) + " euros.\n");
+                        }
+                    }
+
+
+/*
+                    for (Owner o : oList){
                         int counter = 0;
                         for (Vehicle v : vList) {
                             String exp = v.getIns_exp_date();
                             if (o.getOid() == v.getOwner_id() && exp.compareTo(now) < 0) counter++;
                         }
                         if (counter > 0) {
-                            printData(o.getFname() + " " + o.getLname() + "'s fine for " + counter + " car(s) is " + (fine * counter) + " euros.\n");
+                            printData(o.getFname() + " " + o.getLname() + "'s fine for " + counter + " car(s) is " + (usersFine * counter) + " euros.\n");
                         }
-                    }
+                    }*/
                     break;
+
             }
 
             //ask to continue!!
@@ -119,6 +118,23 @@ public class Main {
             System.out.println("\n\nPress any key to continue...");
             input.nextLine();
         }
+    }
+
+    private static int readFine() {
+        Scanner input = new Scanner(System.in);
+        String usersFine = "";
+        int fine = 0;
+        System.out.print("Give a cost for the fine: ");
+
+        do {
+            usersFine = input.nextLine();
+            if (usersFine.matches("[0-9]*")) {
+                fine = Integer.parseInt(usersFine);
+                break;
+            }
+            System.out.print("Give a proper number (ex: 10).");
+        } while (true);
+        return fine;
     }
 
     private static int readTimeFrame() {
@@ -158,9 +174,8 @@ public class Main {
      * <p>
      * The destination output depends from the users choice on the {@code Main.printExportTypeMenu()} method.
      *
-     * @param  stringToPrint     String to be written
-     *
-     * @exception  IOException  If an I/O error occurs
+     * @param stringToPrint String to be written
+     * @throws IOException If an I/O error occurs
      */
     public static void printData(String stringToPrint) {
         try {

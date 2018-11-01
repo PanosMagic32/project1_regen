@@ -20,11 +20,11 @@ public class Vehicle {
         return ins_exp_date;
     }
 
-    public int getVehicle_id() {
+    public int getVid() {
         return vehicle_id;
     }
 
-    public int getOwner_id() {
+    public int getOid() {
         return owner_id;
     }
 
