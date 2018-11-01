@@ -54,7 +54,7 @@ create table vehicle(
 	plate varchar(8) not null,
 	ins_exp_date date not null,
 	oid int unsigned not null,
-    primary key(vid),
+        primary key(vid),
 	foreign key(oid) references owner(oid)
 ) engine=InnoDB default charset=utf8mb4;
 ```
