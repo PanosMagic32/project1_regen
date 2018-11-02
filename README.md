@@ -34,6 +34,9 @@ H κλάση PropertiesReader θα χρησιμοποιηθεί για την α
 ### DBtableGetter
 Η κλάση DBtableGetter θα συνδέεται στη βάση (μέσω της DButils) όπου θα καταχωρεί τα στοιχεία των πινάκων Owner και Vehicle σε δύο λίστες, αντίστοιχα και στην συνέχεια θα επιστρέφει μία λίστα που θα έχει συγχωνευμένα τα Vehicles ανά Owner.
 
+###Team4Exception
+Η κλάση Team4Exception, σε περίπτωση σφάλματος, εμφανίζει μήνυμα σφάλματος στην κονσόλα και καταγράφει το σφάλμα σε ένα αρχείο log.
+
 # DataBase ER
 ![ER](https://image.ibb.co/eijwnf/er.png)
 
