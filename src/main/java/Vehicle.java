@@ -30,6 +30,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return " " + plate.toUpperCase() + "     " + ins_exp_date+"\n";
+        return "Vehicle's plate: " + plate.toUpperCase() + ", Expiration date: " + ins_exp_date + "\n";
     }
 }

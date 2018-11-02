@@ -5,7 +5,8 @@ public class Owner {
     private String fname;
     private String lname;
     private int oid;
-    private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();;
+    private ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+    ;
 
     public Owner(String fname, String lname, int oid) {
         this.fname = fname;
@@ -38,7 +39,7 @@ public class Owner {
         return "Owner{" +
                 "fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
-                ", vehicles are= '"+ vehicles +'\'' +
+                ", vehicles are= '" + vehicles + '\'' +
                 '}';
     }
 }
