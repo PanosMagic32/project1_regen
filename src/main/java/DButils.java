@@ -15,14 +15,20 @@ public class DButils {
 
         try {
             Class.forName(dbDriver);
-            return  DriverManager.getConnection(dbConnection, dbUser, dbPassword);
+            return DriverManager.getConnection(dbConnection, dbUser, dbPassword);
         } catch (Exception e) {
-            e.printStackTrace();
+            new Team4Exception(e);
         }
         return null;
     }
 
-    static void terminate(Connection connection) throws SQLException {
-        if (connection != null) connection.close();
+    static void terminate(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                new Team4Exception(e);
+            }
+        }
     }
 }

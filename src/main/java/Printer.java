@@ -22,7 +22,7 @@ public class Printer {
             this.myOutput.write(stringToPrint);
             this.myOutput.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            new Team4Exception(e);
         }
     }
 }

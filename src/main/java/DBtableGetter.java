@@ -14,7 +14,7 @@ public class DBtableGetter {
             oList = getOwnersTable();
             vList = getVehiclesTable();
         } catch (Exception e) {
-            e.printStackTrace();
+            new Team4Exception(e);
         }
 
         for (Owner o : oList) {
@@ -52,7 +52,7 @@ public class DBtableGetter {
             }
             return vList;
         } catch (SQLException e) {
-            e.printStackTrace();
+            new Team4Exception(e);
         } finally {
             try {
                 DButils.terminate(connection);
@@ -60,7 +60,7 @@ public class DBtableGetter {
                     rs.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                new Team4Exception(e);
             }
         }
         return vList;
@@ -88,7 +88,7 @@ public class DBtableGetter {
             }
             return oList;
         } catch (SQLException e) {
-            e.printStackTrace();
+            new Team4Exception(e);
         } finally {
             try {
                 DButils.terminate(connection);
@@ -96,7 +96,7 @@ public class DBtableGetter {
                     rs.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                new Team4Exception(e);
             }
         }
         return oList;

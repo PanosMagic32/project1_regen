@@ -40,7 +40,7 @@ public class Main {
                 try {
                     printer = new Printer(new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv"))));
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    new Team4Exception(e);
                 }
             } else {
                 //output=console
@@ -73,7 +73,7 @@ public class Main {
                     try {
                         c.setTime(dateFormat.parse(now));
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                        new Team4Exception(e);
                     }
                     c.add(Calendar.DAY_OF_MONTH, timeFrame);
                     String nowPlusTimeFrame = dateFormat.format(c.getTime());

@@ -12,14 +12,14 @@ public class PropertiesReader {
             input = new FileInputStream("config.properties");
             // load a properties file
             prop.load(input);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            new Team4Exception(e);
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    new Team4Exception(e);
                 }
             }
         }
