@@ -1,11 +1,14 @@
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.sql.Connection;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collector;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -13,11 +16,11 @@ public class Main {
     private static final String FUNCTIONALITY_REGEX = "[0-4]";
     private static final String EXPORT_TYPE_REGEX = "[1-2]";
     private static final String PLATE_REGEX = "[a-zA-Z]{3}-[0-9]{4}";
-    private static final String FINE_REGEX = "[1-9]{1}[0-9]*";// TODO: 2/11/2018 na to dokimasoume
+    private static final String FINE_REGEX = "[1-9]{1}[0-9]*";
     private static final String TIMEFRAME_REGEX = "[0-9]*";
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         String selectedFunctionality;
         String selectedExportType;
@@ -34,7 +37,11 @@ public class Main {
             selectedExportType = UserInputReader.userInput(EXPORT_TYPE_REGEX, "Select export type: ", "Select export type (eg. 1 or 2): ");
             if (selectedExportType.equals("1")) {
                 //output=file
-                printer = new Printer(new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv"))));
+                try {
+                    printer = new Printer(new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv"))));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             } else {
                 //output=console
                 printer = new Printer(new BufferedWriter(new OutputStreamWriter(System.out)));
@@ -63,7 +70,11 @@ public class Main {
                 case "2"://forecoming time frame
                     int timeFrame = Integer.parseInt(UserInputReader.userInput(TIMEFRAME_REGEX, "Give a time frame (days): ", "Give a time frame (ex: 30): "));
 
-                    c.setTime(dateFormat.parse(now));
+                    try {
+                        c.setTime(dateFormat.parse(now));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     c.add(Calendar.DAY_OF_MONTH, timeFrame);
                     String nowPlusTimeFrame = dateFormat.format(c.getTime());
                     for (Vehicle v : vList) {
