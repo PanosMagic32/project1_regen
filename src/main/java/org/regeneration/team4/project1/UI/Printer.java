@@ -1,6 +1,6 @@
 package org.regeneration.team4.project1.UI;
 
-import org.regeneration.team4.project1.App.Team4Exception;
+import org.regeneration.team4.project1.App.CustomWrapException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -25,8 +25,8 @@ public class Printer {
         try {
             this.myOutput.write(stringToPrint);
             this.myOutput.flush();
-        } catch (IOException e) {
-            new Team4Exception(e);
+        } catch (IOException exc) {
+            new CustomWrapException(exc);
         }
     }
 }

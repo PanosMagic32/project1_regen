@@ -1,7 +1,7 @@
 package org.regeneration.team4.project1.DB;
 
+import org.regeneration.team4.project1.App.CustomWrapException;
 import org.regeneration.team4.project1.App.Owner;
-import org.regeneration.team4.project1.App.Team4Exception;
 import org.regeneration.team4.project1.App.Vehicle;
 
 import java.sql.Connection;
@@ -11,8 +11,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DBtableGetter {
+    private Connection connection;
     private ArrayList<Owner> oList;
     private ArrayList<Vehicle> vList;
+
+    public DBtableGetter(DButils dButils) {
+        this.connection = dButils.getConnection();
+    }
 
     //merge vehicles per owner in owner list
     public ArrayList<Owner> getOwnersIncludedVehicles() {
@@ -20,8 +25,8 @@ public class DBtableGetter {
         try {
             oList = getOwnersTable();
             vList = getVehiclesTable();
-        } catch (Exception e) {
-            new Team4Exception(e);
+        } catch (Exception exc) {
+            new CustomWrapException(exc);
         }
 
         for (Owner o : oList) {
@@ -38,16 +43,15 @@ public class DBtableGetter {
     //return vehicles from db
     private ArrayList<Vehicle> getVehiclesTable() {
 
-        Connection connection = DButils.connect();
+//        Connection connection = DButils.connect();
 
-        String query = "SELECT * FROM vehicle";
+        String query = "SELECT vid, plate, ins_exp_date, oid FROM vehicle";
         ArrayList<Vehicle> vList = new ArrayList<>();
 
-        ResultSet rs = null;
+//            ResultSet rs = null;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            rs = preparedStatement.executeQuery(query);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet rs = preparedStatement.executeQuery(query)) {
             //iterate through results
             while (rs.next()) {
                 int vid = rs.getInt("vid");
@@ -57,18 +61,11 @@ public class DBtableGetter {
                 Vehicle vehicle = new Vehicle(plate, ins_exp_date, vid, oid);
                 vList.add(vehicle);
             }
+
+
             return vList;
-        } catch (SQLException e) {
-            new Team4Exception(e);
-        } finally {
-            try {
-                DButils.terminate(connection);
-                if (rs != null && !rs.isClosed()) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                new Team4Exception(e);
-            }
+        } catch (SQLException exc) {
+            new CustomWrapException(exc);
         }
         return vList;
     }
@@ -76,15 +73,15 @@ public class DBtableGetter {
     //return owners from db
     private ArrayList<Owner> getOwnersTable() {
 
-        Connection connection = DButils.connect();
+        //Connection connection = DButils.connect();
 
 
-        String query = "SELECT * FROM owner";
+        String query = "SELECT oid, fname, lname FROM owner";
         ArrayList<Owner> oList = new ArrayList<>();
 
-        ResultSet rs = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            rs = preparedStatement.executeQuery(query);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet rs = preparedStatement.executeQuery(query)) {
+
 
             //iterate through results
             while (rs.next()) {
@@ -95,17 +92,8 @@ public class DBtableGetter {
                 oList.add(owner);
             }
             return oList;
-        } catch (SQLException e) {
-            new Team4Exception(e);
-        } finally {
-            try {
-                DButils.terminate(connection);
-                if (rs != null && !rs.isClosed()) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                new Team4Exception(e);
-            }
+        } catch (SQLException exc) {
+            new CustomWrapException(exc);
         }
         return oList;
     }

@@ -10,21 +10,12 @@ public class PropertiesReader {
     //reads the properties file that contains db connection info
     public static Properties getProps() {
         Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            input = new FileInputStream("config.properties");
-            // load a properties file
+
+        // load a properties file
+        try (InputStream input = new FileInputStream("config.properties")) {
             prop.load(input);
-        } catch (IOException e) {
-            new Team4Exception(e);
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    new Team4Exception(e);
-                }
-            }
+        } catch (IOException exc) {
+            new CustomWrapException(exc);
         }
         return prop;
     }

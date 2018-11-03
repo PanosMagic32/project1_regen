@@ -1,6 +1,7 @@
 package org.regeneration.team4.project1.App;
 
 import org.regeneration.team4.project1.DB.DBtableGetter;
+import org.regeneration.team4.project1.DB.DButils;
 import org.regeneration.team4.project1.UI.Menu;
 import org.regeneration.team4.project1.UI.Printer;
 import org.regeneration.team4.project1.UI.UserInputReader;
@@ -19,18 +20,14 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Main {
-    private static Printer printer;
     private static final String FUNCTIONALITY_REGEX = "[0-4]";
     private static final String EXPORT_TYPE_REGEX = "[1-2]";
     private static final String PLATE_REGEX = "[a-zA-Z]{3}-[0-9]{4}";
     private static final String FINE_REGEX = "[1-9]{1}[0-9]*";
     private static final String TIMEFRAME_REGEX = "[0-9]*";
-
+    private static Printer printer;
 
     public static void main(String[] args) {
-
-
-
         String selectedFunctionality;
         String selectedExportType;
 
@@ -48,8 +45,8 @@ public class Main {
                 //output=file
                 try {
                     printer = new Printer(new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv"))));
-                } catch (FileNotFoundException e) {
-                    new Team4Exception(e);
+                } catch (FileNotFoundException exc) {
+                    new CustomWrapException(exc);
                 }
             } else {
                 //output=console
@@ -57,8 +54,11 @@ public class Main {
             }
 
             //retrieves the tables owner and vehicle and merges them
-            DBtableGetter tables = new DBtableGetter();
+            DButils dbUtils = new DButils();
+            dbUtils.connect();
+            DBtableGetter tables = new DBtableGetter(dbUtils);
             ArrayList<Owner> oList = tables.getOwnersIncludedVehicles();
+            dbUtils.disconnect();
             ArrayList<Vehicle> vList = new ArrayList<>();
             for (Owner o : oList) {
                 vList.addAll(o.getVehicles());
@@ -85,8 +85,8 @@ public class Main {
 
                     try {
                         c.setTime(dateFormat.parse(now));
-                    } catch (ParseException e) {
-                        new Team4Exception(e);
+                    } catch (ParseException exc) {
+                        new CustomWrapException(exc);
                     }
                     c.add(Calendar.DAY_OF_MONTH, timeFrame);
                     String nowPlusTimeFrame = dateFormat.format(c.getTime());

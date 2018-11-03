@@ -1,7 +1,7 @@
 package org.regeneration.team4.project1.DB;
 
+import org.regeneration.team4.project1.App.CustomWrapException;
 import org.regeneration.team4.project1.App.PropertiesReader;
-import org.regeneration.team4.project1.App.Team4Exception;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,14 @@ import java.util.Properties;
 
 public class DButils {
 
+    private Connection connection;
+
+    public Connection getConnection() {
+        return connection;
+    }
+
     //create connection to db
-    static Connection connect() {
+    public void connect() {
         Properties prop = PropertiesReader.getProps();
 
         String dbDriver = prop.getProperty("DB_DRIVER");
@@ -22,20 +28,19 @@ public class DButils {
 
         try {
             Class.forName(dbDriver);
-            return DriverManager.getConnection(dbConnection, dbUser, dbPassword);
-        } catch (Exception e) {
-            new Team4Exception(e);
+            connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
+        } catch (Exception exc) {
+            new CustomWrapException(exc);
         }
-        return null;
     }
 
-    //terminate connection to db
-    static void terminate(Connection connection) {
+    //disconnect connection to db
+    public void disconnect() {
         if (connection != null) {
             try {
                 connection.close();
-            } catch (SQLException e) {
-                new Team4Exception(e);
+            } catch (SQLException exc) {
+                new CustomWrapException(exc);
             }
         }
     }

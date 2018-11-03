@@ -6,12 +6,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class Team4Exception extends Exception {
+public class CustomWrapException extends Exception {
 
     Logger logger = Logger.getLogger("Team4Log");
     FileHandler fh;
 
-    public Team4Exception(Throwable cause) {
+    public CustomWrapException(Throwable cause) {
 
         try {
             logger.setUseParentHandlers(false);
@@ -25,10 +25,8 @@ public class Team4Exception extends Exception {
             System.out.println("\nOops! There's a glitch in the Matrix! Agent Smith dispatched! Run for your lives!");
 
             System.exit(-1);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exc) {
+            exc.printStackTrace();
         }
     }
 }
