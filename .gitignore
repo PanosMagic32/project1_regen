@@ -4,5 +4,4 @@ target/
 output.csv
 output.txt
 *.iml
-config.properties
 insurance.log

@@ -1,3 +1,5 @@
+package org.regeneration.team4.project1.App;
+
 import java.util.Comparator;
 
 public class VehicleComparator implements Comparator<Vehicle> {

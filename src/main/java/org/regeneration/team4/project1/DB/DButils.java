@@ -1,3 +1,8 @@
+package org.regeneration.team4.project1.DB;
+
+import org.regeneration.team4.project1.App.PropertiesReader;
+import org.regeneration.team4.project1.App.Team4Exception;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +16,8 @@ public class DButils {
         String dbDriver = prop.getProperty("DB_DRIVER");
         String dbConnection = prop.getProperty("DB_CONNECTION");
         String dbUser = prop.getProperty("DB_USER");
-        String dbPassword = prop.getProperty("DB_PASSWORD");
+
+        String dbPassword = System.getenv("DB_PASSWORD");
 
         try {
             Class.forName(dbDriver);

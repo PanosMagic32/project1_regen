@@ -1,8 +1,10 @@
+package org.regeneration.team4.project1.UI;
+
 public class Menu {
 
 
 
-    static void printMainMenu() {
+    public static void printMainMenu() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("------------------------------------");
         System.out.println("--- Select Functionality to perform:");
@@ -16,7 +18,7 @@ public class Menu {
         System.out.println("------------------------------------");
     }
 
-    static void printExportTypeMenu() {
+    public static void printExportTypeMenu() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("----------------------");
         System.out.println("--- Enter export type:");

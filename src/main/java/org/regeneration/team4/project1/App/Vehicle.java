@@ -1,3 +1,5 @@
+package org.regeneration.team4.project1.App;
+
 public class Vehicle {
 
     private String plate;
