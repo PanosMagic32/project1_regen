@@ -14,6 +14,7 @@ public class DBtableGetter {
     private ArrayList<Owner> oList;
     private ArrayList<Vehicle> vList;
 
+    //merge vehicles per owner in owner list
     public ArrayList<Owner> getOwnersIncludedVehicles() {
 
         try {
@@ -34,7 +35,7 @@ public class DBtableGetter {
 
     }
 
-
+    //return vehicles from db
     private ArrayList<Vehicle> getVehiclesTable() {
 
         Connection connection = DButils.connect();
@@ -72,6 +73,7 @@ public class DBtableGetter {
         return vList;
     }
 
+    //return owners from db
     private ArrayList<Owner> getOwnersTable() {
 
         Connection connection = DButils.connect();

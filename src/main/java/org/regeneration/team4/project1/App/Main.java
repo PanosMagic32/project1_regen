@@ -35,13 +35,13 @@ public class Main {
         String selectedExportType;
 
         while (true) {
+            //prints main menu to select programs functionality
             Menu.printMainMenu();
             selectedFunctionality = UserInputReader.userInput(FUNCTIONALITY_REGEX, "Select functionality: ", "Select functionality (eg. 1, 2, 3, 4 or 0): ");
 
-
             if (selectedFunctionality.equals("0")) System.exit(0);
 
-
+            //prints the export menu and selects the type
             Menu.printExportTypeMenu();
             selectedExportType = UserInputReader.userInput(EXPORT_TYPE_REGEX, "Select export type: ", "Select export type (eg. 1 or 2): ");
             if (selectedExportType.equals("1")) {
@@ -56,6 +56,7 @@ public class Main {
                 printer = new Printer(new BufferedWriter(new OutputStreamWriter(System.out)));
             }
 
+            //retrieves the tables owner and vehicle and merges them
             DBtableGetter tables = new DBtableGetter();
             ArrayList<Owner> oList = tables.getOwnersIncludedVehicles();
             ArrayList<Vehicle> vList = new ArrayList<>();
@@ -63,12 +64,14 @@ public class Main {
                 vList.addAll(o.getVehicles());
             }
 
+            //takes the current date to the given format
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Calendar c = Calendar.getInstance();
             String now = dateFormat.format(c.getTime());
 
             switch (selectedFunctionality) {
-                case "1"://status
+                case "1":
+                    //give the insurance status from plate input
                     String usersPlate = UserInputReader.userInput(PLATE_REGEX, "Give a plate number: ", "Give a plate number (ex: NHO-2233): ");
 
                     List<Vehicle> vehicleWithUsersPlate = vList.stream().filter((v) -> v.getPlate().equals(usersPlate)).collect(Collectors.toList());
@@ -76,7 +79,8 @@ public class Main {
                     else System.out.println("Plate not found.");
                     break;
 
-                case "2"://forecoming time frame
+                case "2":
+                    //give the insurance status from plate input
                     int timeFrame = Integer.parseInt(UserInputReader.userInput(TIMEFRAME_REGEX, "Give a time frame (days): ", "Give a time frame (ex: 30): "));
 
                     try {
@@ -95,7 +99,7 @@ public class Main {
                     break;
 
                 case "3":
-                    //expiries
+                    //displays all vehicles sorted by plate
                     vList.sort(new VehicleComparator());
                     for (Vehicle v : vList) {
                         printer.printData(v.toString());
@@ -103,7 +107,7 @@ public class Main {
                     break;
 
                 case "4":
-                    //calculate fine
+                    //calculate fine for expired insurances according to given cost
                     int usersFine = Integer.parseInt(UserInputReader.userInput(FINE_REGEX, "Give a cost for the fine: ", "Give a proper number (eg. 10): "));
 
                     for (Owner o : oList) {

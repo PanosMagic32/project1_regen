@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class DButils {
 
+    //create connection to db
     static Connection connect() {
         Properties prop = PropertiesReader.getProps();
 
@@ -28,6 +29,7 @@ public class DButils {
         return null;
     }
 
+    //terminate connection to db
     static void terminate(Connection connection) {
         if (connection != null) {
             try {

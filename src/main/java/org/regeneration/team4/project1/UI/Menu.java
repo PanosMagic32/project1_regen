@@ -3,7 +3,7 @@ package org.regeneration.team4.project1.UI;
 public class Menu {
 
 
-
+    //prints the main menu of the program
     public static void printMainMenu() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("------------------------------------");
@@ -18,6 +18,7 @@ public class Menu {
         System.out.println("------------------------------------");
     }
 
+    //prints the export type menu of the program
     public static void printExportTypeMenu() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         System.out.println("----------------------");

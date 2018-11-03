@@ -7,6 +7,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
 
+    //reads the properties file that contains db connection info
     public static Properties getProps() {
         Properties prop = new Properties();
         InputStream input = null;
