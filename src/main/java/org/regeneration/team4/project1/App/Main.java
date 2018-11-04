@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -25,9 +27,11 @@ public class Main {
     private static final String PLATE_REGEX = "[a-zA-Z]{3}-[0-9]{4}";
     private static final String FINE_REGEX = "[1-9]{1}[0-9]*";
     private static final String TIMEFRAME_REGEX = "[0-9]*";
+    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private static Printer printer;
 
     public static void main(String[] args) {
+        InsuranceAppLogger.init();
         String selectedFunctionality;
         String selectedExportType;
 
@@ -46,7 +50,8 @@ public class Main {
                 try {
                     printer = new Printer(new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.csv"))));
                 } catch (FileNotFoundException exc) {
-                    new CustomWrapException(exc);
+                    logger.log(Level.SEVERE, "Error message for Team4: Couldn't create file 'output.csv'!", exc);
+                    new CustomWrapException();
                 }
             } else {
                 //output=console
@@ -86,7 +91,8 @@ public class Main {
                     try {
                         c.setTime(dateFormat.parse(now));
                     } catch (ParseException exc) {
-                        new CustomWrapException(exc);
+                        logger.log(Level.SEVERE, "Error message for Team4: Couldn't parse string to calendar!", exc);
+                        new CustomWrapException();
                     }
                     c.add(Calendar.DAY_OF_MONTH, timeFrame);
                     String nowPlusTimeFrame = dateFormat.format(c.getTime());

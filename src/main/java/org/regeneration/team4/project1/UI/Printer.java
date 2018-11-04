@@ -1,11 +1,15 @@
 package org.regeneration.team4.project1.UI;
 
 import org.regeneration.team4.project1.App.CustomWrapException;
+import org.regeneration.team4.project1.App.InsuranceAppLogger;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Printer {
+    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private BufferedWriter myOutput;
 
     public Printer(BufferedWriter myOutput) {
@@ -26,7 +30,8 @@ public class Printer {
             this.myOutput.write(stringToPrint);
             this.myOutput.flush();
         } catch (IOException exc) {
-            new CustomWrapException(exc);
+            logger.log(Level.SEVERE, "Error message for Team4: Couldn't printData()  into file 'output.csv'!", exc);
+            new CustomWrapException();
         }
     }
 }

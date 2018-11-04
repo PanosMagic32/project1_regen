@@ -1,6 +1,7 @@
 package org.regeneration.team4.project1.DB;
 
 import org.regeneration.team4.project1.App.CustomWrapException;
+import org.regeneration.team4.project1.App.InsuranceAppLogger;
 import org.regeneration.team4.project1.App.Owner;
 import org.regeneration.team4.project1.App.Vehicle;
 
@@ -9,8 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBtableGetter {
+    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private Connection connection;
     private ArrayList<Owner> oList;
     private ArrayList<Vehicle> vList;
@@ -21,14 +25,8 @@ public class DBtableGetter {
 
     //merge vehicles per owner in owner list
     public ArrayList<Owner> getOwnersIncludedVehicles() {
-
-        try {
-            oList = getOwnersTable();
-            vList = getVehiclesTable();
-        } catch (Exception exc) {
-            new CustomWrapException(exc);
-        }
-
+        oList = getOwnersTable();
+        vList = getVehiclesTable();
         for (Owner o : oList) {
             for (Vehicle v : vList) {
                 if (o.getOid() == v.getOid()) {
@@ -43,12 +41,8 @@ public class DBtableGetter {
     //return vehicles from db
     private ArrayList<Vehicle> getVehiclesTable() {
 
-//        Connection connection = DButils.connect();
-
         String query = "SELECT vid, plate, ins_exp_date, oid FROM vehicle";
         ArrayList<Vehicle> vList = new ArrayList<>();
-
-//            ResultSet rs = null;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery(query)) {
@@ -65,7 +59,8 @@ public class DBtableGetter {
 
             return vList;
         } catch (SQLException exc) {
-            new CustomWrapException(exc);
+            logger.log(Level.SEVERE, "Error message for Team4: Couldn't retrieve table 'Vehicle' from database!", exc);
+            new CustomWrapException();
         }
         return vList;
     }
@@ -73,15 +68,11 @@ public class DBtableGetter {
     //return owners from db
     private ArrayList<Owner> getOwnersTable() {
 
-        //Connection connection = DButils.connect();
-
-
         String query = "SELECT oid, fname, lname FROM owner";
         ArrayList<Owner> oList = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery(query)) {
-
 
             //iterate through results
             while (rs.next()) {
@@ -93,7 +84,8 @@ public class DBtableGetter {
             }
             return oList;
         } catch (SQLException exc) {
-            new CustomWrapException(exc);
+            logger.log(Level.SEVERE, "Error message for Team4: Couldn't retrieve table 'Owner' from database!", exc);
+            new CustomWrapException();
         }
         return oList;
     }

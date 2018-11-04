@@ -4,8 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PropertiesReader {
+
+    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
 
     //reads the properties file that contains db connection info
     public static Properties getProps() {
@@ -15,7 +19,8 @@ public class PropertiesReader {
         try (InputStream input = new FileInputStream("config.properties")) {
             prop.load(input);
         } catch (IOException exc) {
-            new CustomWrapException(exc);
+            logger.log(Level.SEVERE, "Error message for Team4: Couldn't read properties file ('config.properties')!", exc);
+            new CustomWrapException();
         }
         return prop;
     }

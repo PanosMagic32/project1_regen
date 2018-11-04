@@ -1,15 +1,19 @@
 package org.regeneration.team4.project1.DB;
 
 import org.regeneration.team4.project1.App.CustomWrapException;
+import org.regeneration.team4.project1.App.InsuranceAppLogger;
 import org.regeneration.team4.project1.App.PropertiesReader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DButils {
 
+    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private Connection connection;
 
     public Connection getConnection() {
@@ -30,7 +34,8 @@ public class DButils {
             Class.forName(dbDriver);
             connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
         } catch (Exception exc) {
-            new CustomWrapException(exc);
+            logger.log(Level.SEVERE, "Error message for Team4: Couldn't connect to database!", exc);
+            new CustomWrapException();
         }
     }
 
@@ -40,7 +45,8 @@ public class DButils {
             try {
                 connection.close();
             } catch (SQLException exc) {
-                new CustomWrapException(exc);
+                logger.log(Level.SEVERE, "Error message for Team4: Couldn't disconnect from database!", exc);
+                new CustomWrapException();
             }
         }
     }
