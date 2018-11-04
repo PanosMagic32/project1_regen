@@ -31,6 +31,7 @@ public class DButils {
         String dbPassword = System.getenv("DB_PASSWORD");
 
         try {
+            Class.forName(dbDriver);//used only for versions older than java 4
             connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
         } catch (Exception exc) {
             logger.log(Level.SEVERE, "Error message for Team4: Couldn't connect to database!", exc);

@@ -30,7 +30,7 @@ public class Printer {
             this.myOutput.write(stringToPrint);
             this.myOutput.flush();
         } catch (IOException exc) {
-            logger.log(Level.SEVERE, "Error message for Team4: Couldn't printData()  into file 'output.csv'!", exc);
+            logger.log(Level.SEVERE, "Error message for Team4: Couldn't printData() into file 'output.csv'!", exc);
             new CustomWrapException();
         }
     }

@@ -41,10 +41,11 @@ public class DBtableGetter {
     private ArrayList<Vehicle> getVehiclesTable() {
 
         String query = "SELECT vid, plate, ins_exp_date, oid FROM vehicle";
-        ArrayList<Vehicle> vList = new ArrayList<>();
+        vList = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery(query)) {
+
             //iterate through results
             while (rs.next()) {
                 int vid = rs.getInt("vid");
@@ -66,7 +67,7 @@ public class DBtableGetter {
     private ArrayList<Owner> getOwnersTable() {
 
         String query = "SELECT oid, fname, lname FROM owner";
-        ArrayList<Owner> oList = new ArrayList<>();
+        oList = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery(query)) {
