@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBtableGetter {
-    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
+    private static final Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private Connection connection;
     private ArrayList<Owner> oList;
     private ArrayList<Vehicle> vList;
@@ -35,7 +35,6 @@ public class DBtableGetter {
             }
         }
         return oList;
-
     }
 
     //return vehicles from db
@@ -55,8 +54,6 @@ public class DBtableGetter {
                 Vehicle vehicle = new Vehicle(plate, ins_exp_date, vid, oid);
                 vList.add(vehicle);
             }
-
-
             return vList;
         } catch (SQLException exc) {
             logger.log(Level.SEVERE, "Error message for Team4: Couldn't retrieve table 'Vehicle' from database!", exc);

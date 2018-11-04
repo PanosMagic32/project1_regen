@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class DButils {
 
-    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
+    private static final Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private Connection connection;
 
     public Connection getConnection() {
@@ -31,7 +31,6 @@ public class DButils {
         String dbPassword = System.getenv("DB_PASSWORD");
 
         try {
-            Class.forName(dbDriver);
             connection = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
         } catch (Exception exc) {
             logger.log(Level.SEVERE, "Error message for Team4: Couldn't connect to database!", exc);

@@ -27,7 +27,7 @@ public class Main {
     private static final String PLATE_REGEX = "[a-zA-Z]{3}-[0-9]{4}";
     private static final String FINE_REGEX = "[1-9]{1}[0-9]*";
     private static final String TIMEFRAME_REGEX = "[0-9]*";
-    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
+    private static final Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private static Printer printer;
 
     public static void main(String[] args) {

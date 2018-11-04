@@ -7,7 +7,7 @@ import java.util.logging.SimpleFormatter;
 
 public class InsuranceAppLogger {
 
-    private final static Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
+    private static final Logger logger = Logger.getLogger(InsuranceAppLogger.class.getName());
     private static FileHandler fh = null;
 
     static void init() {
