@@ -49,7 +49,7 @@ H κλάση PropertiesReader θα χρησιμοποιηθεί για την α
 ### CustomWrapException
 Η κλάση CustomWrapException, σε περίπτωση σφάλματος, εμφανίζει μήνυμα σφάλματος στην κονσόλα και καταγράφει το σφάλμα σε ένα αρχείο log.
 
-###InsuranceAppLogger
+### InsuranceAppLogger
 Η κλάση InsuranceAppLogger δημιουργεί έναν logger, τα περιεχόμενα του οποίου αποθηκεύει σε ένα αρχείο, το οποίο θα βοηθήσει στην αποσφαλμάτωση του κώδικα.
 
 # DataBase ER
