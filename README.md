@@ -96,3 +96,9 @@ create table vehicle(
 
 # Use case diagram
 ![ER](https://image.ibb.co/jKJNSf/use-case-diagram.png)
+
+# Contributors
+* Chara Sarianidou
+* Konstantina Kaffe
+* Panos Loukas
+* Dimitris Apostolou
