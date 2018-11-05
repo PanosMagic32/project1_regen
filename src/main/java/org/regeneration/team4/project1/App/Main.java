@@ -40,7 +40,10 @@ public class Main {
             Menu.printMainMenu();
             selectedFunctionality = UserInputReader.userInput(FUNCTIONALITY_REGEX, "Select functionality: ", "Select functionality (eg. 1, 2, 3, 4 or 0): ");
 
-            if (selectedFunctionality.equals("0")) System.exit(0);
+            if (selectedFunctionality.equals("0")) {
+                InsuranceAppLogger.terminate();
+                System.exit(0);
+            }
 
             //prints the export menu and selects the type
             Menu.printExportTypeMenu();
@@ -135,5 +138,6 @@ public class Main {
             System.out.println("\n\nPress any key to continue...");
             input.nextLine();
         }
+
     }
 }

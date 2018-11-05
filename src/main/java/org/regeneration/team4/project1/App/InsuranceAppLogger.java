@@ -20,4 +20,8 @@ public class InsuranceAppLogger {
         logger.setUseParentHandlers(false);
         logger.addHandler(fh);
     }
+
+    static void terminate() {
+        fh.close();
+    }
 }
